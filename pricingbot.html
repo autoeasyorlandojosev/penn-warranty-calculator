@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Powertrain Pricing Bot</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, select { margin: 5px; padding: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Penn Warranty Calculator</h2>
+
+  <label>Term:</label>
+  <select id="termSelect">
+    <option>3 month</option>
+    <option>6 month</option>
+    <option>12 month</option>
+    <option>24 month</option>
+    <option>36 month</option>
+    <option>48 month</option>
+  </select><br>
+
+  <label>Column:</label>
+  <select id="columnSelect">
+    <option>Highline</option>
+    <option>Elite</option>
+    <option>Gold</option>
+    <option>Standard</option>
+    <option>Power Train</option>
+    <option>Light Truck</option>
+  </select><br>
+
+  <label>Value to Add:</label>
+  <input type="number" id="valueInput"><br>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    const data = {
+      "3 month": { Highline: null, Elite: null, Gold: null, Standard: 321, "Power Train": 135, "Light Truck": null },
+      "6 month": { Highline: null, Elite: null, Gold: 647, Standard: 467, "Power Train": 214, "Light Truck": null },
+      "12 month": { Highline: 1817, Elite: 1390, Gold: 940, Standard: 704, "Power Train": 462, "Light Truck": 1120 },
+      "24 month": { Highline: 2115, Elite: 1829, Gold: 1238, Standard: 968, "Power Train": 720, "Light Truck": 1457 },
+      "36 month": { Highline: 2684, Elite: 2391, Gold: 1390, Standard: 1125, "Power Train": 917, "Light Truck": 1907 },
+      "48 month": { Highline: null, Elite: 2672, Gold: 1547, Standard: 1266, "Power Train": 1092, "Light Truck": null }
+    };
+
+    function calculate() {
+      const term = document.getElementById("termSelect").value;
+      const column = document.getElementById("columnSelect").value;
+      const addValue = parseFloat(document.getElementById("valueInput").value);
+
+      const current = data[term][column];
+      if (current === null || isNaN(addValue)) {
+        document.getElementById("result").innerText = "Invalid input or no data available.";
+        return;
+      }
+
+      const updated = current + addValue;
+      document.getElementById("result").innerText =
+        `Updated ${column} for ${term}: ${current} + ${addValue} = ${updated}`;
+    }
+  </script>
+</body>
+</html>
